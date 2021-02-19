@@ -35,6 +35,7 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
+        yellow.x += 1
         draw_window(red, yellow)
 
     pygame.quit()
