@@ -37,6 +37,16 @@ def handle_yellow_movement(keys_pressed, yellow):
     if keys_pressed[pygame.K_s]: # moving down!
         yellow.y += VEL
 
+def handle_red_movement(keys_pressed, red):
+    if keys_pressed[pygame.K_LEFT]: # moving left!
+        red.x -= VEL
+    if keys_pressed[pygame.K_RIGHT]: # moving righ!
+        red.x += VEL
+    if keys_pressed[pygame.K_UP]: # moving up!
+        red.y -= VEL
+    if keys_pressed[pygame.K_DOWN]: # moving down!
+        red.y += VEL
+
 
 def main():
     yellow = pygame.Rect(300, 100, SPACESHIP_WIDTH, SPACESHIP_HEIGHT)
@@ -51,6 +61,7 @@ def main():
         
         keys_pressed = pygame.key.get_pressed()
         handle_yellow_movement(keys_pressed, yellow)
+        handle_red_movement(keys_pressed, red)
         draw_window(red, yellow)
 
     pygame.quit()
