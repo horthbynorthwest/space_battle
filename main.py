@@ -15,7 +15,10 @@ BORDER = pygame.Rect(WIDTH//2 -5, 0, 10, HEIGHT)
 FPS = 60
 BULLET_VEL = 10
 MAX_BULLETS = 2
+BULLET_DAMAGE = 10
 VEL = 7
+
+MAX_HEALTH = 100
 
 YELLOW_HIT = pygame.USEREVENT + 1
 RED_HIT = pygame.USEREVENT + 2
@@ -89,8 +92,8 @@ def main():
     yellow_bullets = []
     red_bullets = []
 
-    yellow_health = 100
-    red_health = 100
+    yellow_health = MAX_HEALTH
+    red_health = MAX_HEALTH
 
     clock = pygame.time.Clock()
     run = True
@@ -113,10 +116,10 @@ def main():
                     red_bullets.append(bullet)
 
             if event.type == YELLOW_HIT:
-                yellow_health -= 10
+                yellow_health -= BULLET_DAMAGE
 
             if event.type == RED_HIT:
-                red_health -= 10
+                red_health -= BULLET_DAMAGE
         
         winner_text = ""
         if red_health <= 0:
