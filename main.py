@@ -1,23 +1,21 @@
 import pygame
 import os
 
-
 WIDTH, HEIGHT = 900, 500
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Space Battle!")
 
 WHITE = (255, 255, 255)
-
 BLACK = (0, 0, 0)
 
 BORDER = pygame.Rect(WIDTH/2 -5, 0, 10, HEIGHT)
 
 FPS = 60
-
+BULLET_VEL = 10
+MAX_BULS = 5
 VEL = 7
 
 SPACESHIP_WIDTH, SPACESHIP_HEIGHT = 70, 55
-
 
 YELLOW_SPACESHIP_IMAGE = pygame.image.load(os.path.join('Assets', 'spaceship_yellow.png'))
 YELLOW_SPACESHIP = pygame.transform.rotate(pygame.transform.scale(YELLOW_SPACESHIP_IMAGE, (SPACESHIP_WIDTH, SPACESHIP_HEIGHT)), 90)
@@ -56,6 +54,10 @@ def handle_red_movement(keys_pressed, red):
 def main():
     yellow = pygame.Rect(300, 100, SPACESHIP_WIDTH, SPACESHIP_HEIGHT)
     red = pygame.Rect(600, 100, SPACESHIP_WIDTH, SPACESHIP_HEIGHT)
+
+    yellow_bullets = []
+    red_bullets = []
+
     clock = pygame.time.Clock()
     run = True
     while run:
@@ -63,7 +65,16 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
-        
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LSHIFT and len(yellow_bullets) < MAX_BULS:
+                    bullet = pygame.Rect(yellow.x + yellow.width, yellow.y + yellow.height//2 - 2, 10, 5)
+                    yellow_bullets.append(bullet)
+
+                if event.key == pygame.K_RSHIFT and len(red_bullets) < MAX_BULS:
+                    bullet = pygame.Rect(red.x, red.y + red.height//2 - 2, 10, 5)
+                    red_bullets.append(bullet)
+        print(yellow_bullets, red_bullets)
         keys_pressed = pygame.key.get_pressed()
         handle_yellow_movement(keys_pressed, yellow)
         handle_red_movement(keys_pressed, red)
