@@ -89,6 +89,9 @@ def main():
     yellow_bullets = []
     red_bullets = []
 
+    yellow_health = 100
+    red_health = 100
+
     clock = pygame.time.Clock()
     run = True
     while run:
@@ -108,6 +111,23 @@ def main():
                     bullet = pygame.Rect(
                         red.x, red.y + red.height//2 - 2, 10, 5)
                     red_bullets.append(bullet)
+
+            if event.type == YELLOW_HIT:
+                yellow_health -= 10
+
+            if event.type == RED_HIT:
+                red_health -= 10
+        
+        winner_text = ""
+        if red_health <= 0:
+            winner_text = "Yellow Wins!"
+
+        if yellow_health <= 0:
+            winner_text = "Red Wins!"
+
+        if winner_text != "":
+            pass #someone has won
+
 
         keys_pressed = pygame.key.get_pressed()
         handle_yellow_movement(keys_pressed, yellow)
