@@ -10,6 +10,8 @@ WHITE = (255, 255, 255)
 
 FPS = 60
 
+VEL = 7
+
 SPACESHIP_WIDTH, SPACESHIP_HEIGHT = 70, 55
 
 
@@ -35,7 +37,10 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
-        yellow.x += 1
+        
+        keys_pressed = pygame.key.get_pressed()
+        if keys_pressed[pygame.K_a]: # moving left!
+            yellow.x -= VEL
         draw_window(red, yellow)
 
     pygame.quit()
