@@ -8,6 +8,10 @@ pygame.display.set_caption("Space Battle!")
 
 WHITE = (255, 255, 255)
 
+BLACK = (0, 0, 0)
+
+BORDER = pygame.Rect(WIDTH/2 -5, 0, 10, HEIGHT)
+
 FPS = 60
 
 VEL = 7
@@ -23,6 +27,7 @@ RED_SPACESHIP = pygame.transform.rotate(pygame.transform.scale(RED_SPACESHIP_IMA
 
 def draw_window(red, yellow):
     WIN.fill(WHITE)
+    pygame.draw.rect(WIN, BLACK, BORDER)
     WIN.blit(YELLOW_SPACESHIP, (yellow.x, yellow.y))
     WIN.blit(RED_SPACESHIP, (red.x, red.y))
     pygame.display.update()
