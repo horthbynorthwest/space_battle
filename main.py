@@ -33,23 +33,23 @@ def draw_window(red, yellow):
     pygame.display.update()
 
 def handle_yellow_movement(keys_pressed, yellow):
-    if keys_pressed[pygame.K_a]: # moving left!
+    if keys_pressed[pygame.K_a] and yellow.x - VEL > 0: # moving left!
         yellow.x -= VEL
-    if keys_pressed[pygame.K_d]: # moving righ!
+    if keys_pressed[pygame.K_d] and yellow.x + VEL + yellow.width < BORDER.x: # moving right!
         yellow.x += VEL
-    if keys_pressed[pygame.K_w]: # moving up!
+    if keys_pressed[pygame.K_w] and yellow.y - VEL > 0: # moving up!
         yellow.y -= VEL
-    if keys_pressed[pygame.K_s]: # moving down!
+    if keys_pressed[pygame.K_s] and yellow.y + VEL + yellow.height < HEIGHT - 15: # moving down! Had to add some padding as for some reason yellow was half going off the screen
         yellow.y += VEL
 
 def handle_red_movement(keys_pressed, red):
-    if keys_pressed[pygame.K_LEFT]: # moving left!
+    if keys_pressed[pygame.K_LEFT] and red.x - VEL > BORDER.x + BORDER.width: # moving left!
         red.x -= VEL
-    if keys_pressed[pygame.K_RIGHT]: # moving righ!
+    if keys_pressed[pygame.K_RIGHT] and red.x + VEL + red.width < WIDTH: # moving right!
         red.x += VEL
-    if keys_pressed[pygame.K_UP]: # moving up!
+    if keys_pressed[pygame.K_UP] and red.y - VEL > 0: # moving up!
         red.y -= VEL
-    if keys_pressed[pygame.K_DOWN]: # moving down!
+    if keys_pressed[pygame.K_DOWN] and red.y + VEL + red.height < HEIGHT - 15: # moving down!
         red.y += VEL
 
 
