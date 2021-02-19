@@ -1,5 +1,6 @@
 import pygame
 import os
+pygame.font.init()
 
 WIDTH, HEIGHT = 900, 500
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -19,6 +20,8 @@ BULLET_DAMAGE = 10
 VEL = 7
 
 MAX_HEALTH = 100
+HEALTH_FONT = pygame.font.SysFont('couriernew', 40)
+WINNER_FONT = pygame.font.SysFont('couriernew', 100)
 
 YELLOW_HIT = pygame.USEREVENT + 1
 RED_HIT = pygame.USEREVENT + 2
@@ -34,9 +37,18 @@ RED_SPACESHIP = pygame.transform.rotate(pygame.transform.scale(RED_SPACESHIP_IMA
 SPACE_IMAGE = pygame.transform.scale(pygame.image.load(os.path.join('Assets', 'space.png')), (WIDTH, HEIGHT))
 
 
-def draw_window(red, yellow, red_bullets, yellow_bullets):
+def draw_window(red, yellow, red_bullets, yellow_bullets, red_health, yellow_health):
     WIN.blit(SPACE_IMAGE, (0, 0))
     pygame.draw.rect(WIN, BLACK, BORDER)
+
+    red_health_text = HEALTH_FONT.render(
+        "Health: " + str(red_health), 1, RED)
+    yellow_health_text = HEALTH_FONT.render(
+        "Health: " + str(yellow_health), 1, YELLOW)
+
+    WIN.blit(red_health_text, (WIDTH - red_health_text.get_width() - 10, 10))
+    WIN.blit(yellow_health_text, (10, 10))
+
     WIN.blit(YELLOW_SPACESHIP, (yellow.x, yellow.y))
     WIN.blit(RED_SPACESHIP, (red.x, red.y))
 
@@ -47,6 +59,13 @@ def draw_window(red, yellow, red_bullets, yellow_bullets):
         pygame.draw.rect(WIN, YELLOW, bullet)
 
     pygame.display.update()
+
+def draw_winner(text):
+    draw_text = WINNER_FONT.render(text, 1, WHITE)
+    WIN.blit(draw_text, (WIDTH/2 - draw_text.get_width() /
+                         2, HEIGHT/2 - draw_text.get_height()/2))
+    pygame.display.update()
+    pygame.time.delay(5000)
 
 def handle_yellow_movement(keys_pressed, yellow):
     if keys_pressed[pygame.K_a] and yellow.x - VEL > 0: # moving left!
@@ -102,6 +121,7 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
+                pygame.quit()
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LSHIFT and len(yellow_bullets) < MAX_BULLETS:
@@ -129,16 +149,17 @@ def main():
             winner_text = "Red Wins!"
 
         if winner_text != "":
-            pass #someone has won
+            draw_winner(winner_text)
+            break
 
 
         keys_pressed = pygame.key.get_pressed()
         handle_yellow_movement(keys_pressed, yellow)
         handle_red_movement(keys_pressed, red)
         handle_bullets(yellow_bullets, red_bullets, yellow, red)
-        draw_window(red, yellow, red_bullets, yellow_bullets)
+        draw_window(red, yellow, red_bullets, yellow_bullets, red_health, yellow_health)
 
-    pygame.quit()
+    main()
 
 if __name__ == "__main__":
     main()
