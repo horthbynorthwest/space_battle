@@ -43,6 +43,8 @@ def main():
             yellow.x -= VEL
         if keys_pressed[pygame.K_d]: # moving righ!
             yellow.x += VEL
+        if keys_pressed[pygame.K_w]: # moving up!
+            yellow.y -= VEL
         draw_window(red, yellow)
 
     pygame.quit()
